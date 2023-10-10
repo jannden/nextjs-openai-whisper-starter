@@ -1,0 +1,1 @@
+If you choose the saveFile option, the recordings will be save in this folder.
