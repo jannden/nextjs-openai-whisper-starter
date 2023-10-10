@@ -1,6 +1,8 @@
 # NextJS OpenAI Whisper Starter
 A Next.js starter project integrating OpenAI's Whisper API for speech-to-text functionality.
 
+Live demo at [Vercel](https://nextjs-openai-whisper-starter-dm840kek9-jannden.vercel.app/)
+
 It uses only:
 - [NextJS](https://nextjs.org/) with [TailwindCSS](https://tailwindcss.com/)
 - [OpenAI API](https://platform.openai.com/)
