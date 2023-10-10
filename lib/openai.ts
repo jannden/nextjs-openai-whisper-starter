@@ -19,7 +19,7 @@ const globalForOpenAI = globalThis as unknown as {
   openAI: OpenAIClientSingleton | undefined;
 };
 
-export const openAI = globalForOpenAI.openAI ?? openAIClientSingleton();
+let openAI = globalForOpenAI.openAI ?? openAIClientSingleton();
 
 if (process.env.NODE_ENV !== "production") globalForOpenAI.openAI = openAI;
 
@@ -35,6 +35,7 @@ interface WhisperProps {
   response_format?: "json" | "text" | "srt" | "verbose_json" | "vtt";
   temperature?: number;
   language?: string;
+  tempOpenAiKey?: string;
 }
 
 export async function whisper({
@@ -45,11 +46,18 @@ export async function whisper({
   response_format = "json",
   temperature = 0,
   language = "en",
+  tempOpenAiKey,
 }: WhisperProps) {
-  if (!openAI)
-    throw new Error(
-      "OpenAI client not ready. Are you sure you set OPENAI_API_KEY in your .env.local file?"
-    );
+  if (!process.env.OPENAI_API_KEY && openAI?.apiKey !== tempOpenAiKey) {
+    console.log("whisper: using tempOpenAiKey");
+    openAI = new OpenAI({
+      apiKey: tempOpenAiKey,
+    });
+  }
+
+  if (!openAI) {
+    throw new Error("OpenAI client not ready. Are you sure OPENAI_API_KEY is set?");
+  }
 
   if (mode === "Translations") {
     console.log("whisper: translations");

@@ -1,32 +1,24 @@
 "use client";
 
 import React from "react";
-import { Actions, State, useSettings } from "@/lib/stores/settings";
 
-type SelectProps = {
+type BareInputProps = {
   id: string;
   label: string;
-  stateName: keyof State;
-  actionName: keyof Actions;
+  description: string;
+  value: string;
+  setValue: (value: string) => void;
 };
 
-export default function Input({ id, label, stateName, actionName }: SelectProps) {
-  const value = useSettings((state) => state[stateName]);
-  const setValue = useSettings((state) => state[actionName]);
-
+export function BareInput({ id, label, description, value, setValue }: BareInputProps) {
   const updateState = (e: React.FormEvent<HTMLInputElement>) => {
     setValue(e.currentTarget.value);
   };
-
   return (
     <div className="col-span-full">
       <label htmlFor="street-address" className="block">
         <p className="font-semibold leading-7 text-gray-900">{label}</p>
-        <p className="mt-1 text-sm leading-6 text-gray-600">
-          {
-            "An optional text to guide the model's style or continue a previous audio segment. The prompt should match the audio language."
-          }
-        </p>
+        <p className="mt-1 text-sm leading-6 text-gray-600">{description}</p>
       </label>
       <div className="mt-2">
         <input

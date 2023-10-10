@@ -4,15 +4,6 @@ import { cleanInput, guidGenerator } from "@/lib/utils";
 import { whisper } from "@/lib/openai";
 
 export async function POST(req) {
-  if (!process.env.OPENAI_API_KEY) {
-    return Response.json(
-      { error: "Missing OPENAI_API_KEY environment variable" },
-      {
-        status: 400,
-      }
-    );
-  }
-
   const form = await req.formData();
 
   const blob = form.get("file");
@@ -29,6 +20,15 @@ export async function POST(req) {
   }
 
   const options = JSON.parse(raw_options);
+
+  if (!options.key && !process.env.OPENAI_API_KEY) {
+    return Response.json(
+      { error: "Missing OPENAI_API_KEY" },
+      {
+        status: 400,
+      }
+    );
+  }
 
   let fileSize = parseInt(blob.size);
 
@@ -63,6 +63,7 @@ export async function POST(req) {
       response_format: "text",
       temperature: Number(options.temperature),
       language: options.language,
+      tempOpenAiKey: options.key,
     });
 
     console.log("transcription", transcription);
