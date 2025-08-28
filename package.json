@@ -2,7 +2,7 @@
   "name": "nextjs-openai-whisper-starter",
   "description": "A Next.js starter project integrating OpenAI's Whisper API for speech-to-text functionality.",
   "repository": "https://www.github.com/jannden/nextjs-openai-whisper-starter",
-  "author": "Jannden",
+  "author": "JanNDen",
   "license": "MIT",
   "version": "1.0.0",
   "private": true,
